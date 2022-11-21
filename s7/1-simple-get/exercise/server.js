@@ -14,8 +14,10 @@ app.locals.books = [{
 	author: 'another'
 }]
 
+// get /books?sortField=title&sortOrder=1
 app.get('/books', (req, res) => {
 	let results = app.locals.books
+	const { sortField, sortOrder } = req.query
 	if (req.query.genre) {
 		results = app.locals.books.filter(e => e.genre.match(req.query.genre))
 	}
@@ -25,7 +27,22 @@ app.get('/books', (req, res) => {
 	if (req.query.author) {
 		results = results.filter(e => e.author.match(req.query.author))
 	}
-	res.status(200).json(results)
+	if (sortField && sortOrder) {
+		const sortedResults = results.sort((a, b) => {
+			if (a[sortField] === b[sortField]) {
+				return 0
+			} else {
+				if (a[sortField] > b[sortField]) {
+					return 1 * parseInt(sortOrder)
+				} else {
+					return -1 * parseInt(sortOrder)
+				}
+			}
+		})
+		res.status(200).json(sortedResults)
+	} else {
+		res.status(200).json(results)
+	}
 })
 
 app.listen(8080)

@@ -1,9 +1,10 @@
 const express = require('express')
 const bookRouter = require('./book-router')
+const statusRouter = require('./status-router')
 
 const app = express()
 
-app.use(bodyParser.json())
+app.use(express.json())
 
 app.locals.books = [{
 	id: 1,
@@ -18,5 +19,6 @@ app.locals.books = [{
 }]
 
 app.use('/book-api', bookRouter)
+app.use('/status-api', statusRouter)
 
 app.listen(8080)

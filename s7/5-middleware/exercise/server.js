@@ -1,8 +1,10 @@
 const express = require('express')
 const bookRouter = require('./book-router')
+const { logger } = require('./middleware')
 
 const app = express()
 
+app.use(logger)
 app.use(express.json())
 
 app.locals.books = [{

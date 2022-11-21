@@ -56,4 +56,15 @@ app.put('/books/:bid', (req, res) => {
 	}
 })
 
+app.delete('/books/:bid', (req, res) => {
+	let id = parseInt(req.params.bid)
+	const bookIndex = app.locals.books.findIndex(e => e.id === id)
+	if (bookIndex !== -1) {
+		app.locals.books.splice(bookIndex, 1)
+		res.status(200).json({ message: 'accepted' })
+	} else {
+		res.status(404).json({ message: 'not found' })
+	}
+})
+
 app.listen(8080)
