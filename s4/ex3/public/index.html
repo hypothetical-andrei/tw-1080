@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    window.onload = async () => {
+      const contentTable = document.querySelector('#content tbody')
+      try {
+        const response = await fetch('http://localhost:8080/items')
+        const data = await response.json()
+        for (const element of data) {
+          const row = document.createElement('tr')
+          row.innerHTML = `
+            <td>${element.id}</td><td>${element.content}</td>
+          `
+          contentTable.appendChild(row)
+        }
+      } catch (error) {
+        console.warn(error)
+      }
+    }
+  </script>
+</head>
+<body>
+  <table id="content">
+    <thead>
+      <tr>
+        <th>id</th><th>content</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+    </tbody>
+  </table>
+</body>
+</html>

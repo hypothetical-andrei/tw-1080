@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #todos tr:nth-child(odd) td {
+      background-color: orange;
+    }
+  </style>
+  <script>
+    window.onload = () => {
+      const todos = document.getElementById('todos')
+      const item = document.getElementById('item')
+      const addBtn = document.getElementById('addBtn')
+
+      addBtn.onclick = () => {
+        const row = document.createElement('tr')
+        row.innerHTML = `
+          <td>${item.value}</td>
+        `
+        todos.appendChild(row)
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>todos</h1>
+  <table id="todos">
+    <thead>
+      <tr>
+        <th>TODO!</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <div>
+    <input type="text" id="item">
+    <input type="button" id="addBtn" value="+" >
+  </div>
+</body>
+</html>
