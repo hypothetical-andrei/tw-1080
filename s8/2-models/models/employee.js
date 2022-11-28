@@ -29,6 +29,4 @@ const Employee = sequelize.define('employee', {
   }
 })
 
-module.exports = {
-  Employee
-}
+module.exports = Employee
