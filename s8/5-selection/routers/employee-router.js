@@ -9,11 +9,16 @@ router.get('/employees', async (req, res, next) => {
   try {
     const query = {}
     if (Object.keys(req.query).length !== 0) {
-      const { minSalary } = req.query
+      const { minSalary, name } = req.query
       query.where = {}
       if (minSalary) {
         query.where.salary = {
           [Op.gt]: req.query.minSalary
+        }
+      }
+      if (name) {
+        query.where.firstName = {
+          [Op.like]: `%${req.query.name}%`
         }
       }
     }

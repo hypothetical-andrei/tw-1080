@@ -48,5 +48,19 @@ router.put('/employees/:eid', async (req, res, next) => {
   }
 })
 
+router.delete('/employees/:eid', async (req, res, next) => {
+  try {
+    const employee = await Employee.findByPk(req.params.eid)
+    if (employee) {
+      await employee.destroy()
+      res.status(202).json({ message: 'accepted' })
+    } else {
+      res.status(404).json({ message: 'not found' })
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
 
 module.exports = router

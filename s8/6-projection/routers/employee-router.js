@@ -9,7 +9,7 @@ router.get('/employees', async (req, res, next) => {
   try {
     const query = {}
     if (Object.keys(req.query).length !== 0) {
-      const { minSalary, simplified } = req.query
+      const { minSalary, simplified, sortField } = req.query
       query.where = {}
       if (minSalary) {
         query.where.salary = {
@@ -20,6 +20,9 @@ router.get('/employees', async (req, res, next) => {
         query.attributes = {
           exclude: ['id']
         }
+      }
+      if (sortField) {
+        query.order = [[req.query.sortField, 'ASC']]
       }
     }
     const employees = await Employee.findAll(query)

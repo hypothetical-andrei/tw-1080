@@ -22,7 +22,8 @@ const Employee = sequelize.define('employee', {
   }, 
   salary: {
     type: Sequelize.INTEGER,
-    allowNull: false,
+    allowNull: true,
+    defaultValue: 1000,
     validate: {
       min: 1000
     }
