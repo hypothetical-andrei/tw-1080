@@ -101,6 +101,32 @@ app.get('/universities/:universityId/students', async (req, res, next) => {
   }
 })
 
+/**
+ * GET one student from a university
+ */
+ app.get('/universities/:universityId/students/:studentId', async (req, res, next) => {
+  try {
+    const university = await University.findByPk(req.params.universityId)
+    if (university) {
+      const students = await university.getStudents({
+        where: {
+          id: req.params.studentId 
+        }
+      })
+      const student = students.shift()
+      if (student) {
+        res.status(200).json(student)
+      } else {
+        res.status(404).json({ message: '404 - Student Not Found!' })
+      }
+    } else {
+      res.status(404).json({ message: '404 - University Not Found!' })
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
 // Create a middleware to handle 500 status errors.
 app.use((err, req, res, next) => {
   console.error('[ERROR]:' + err)

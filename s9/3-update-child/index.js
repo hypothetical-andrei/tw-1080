@@ -148,9 +148,31 @@ app.put('/universities/:universityId/students/:studentId', async (req, res, next
   }
 })
 
+
+
 /**
  * IMPLEMENT DELETE FUNCTION BELOW
  */
+
+ app.delete('/universities/:universityId/students/:studentId', async (req, res, next) => {
+  try {
+    const university = await University.findByPk(req.params.universityId)
+    if (university) {
+      const students = await university.getStudents({ id: req.params.studentId })
+      const student = students.shift()
+      if (student) {
+        await student.destroy()
+        res.status(202).json({ message: 'Student updated!' })
+      } else {
+        res.status(404).json({ message: '404 - Student Not Found!' })
+      }
+    } else {
+      res.status(404).json({ message: '404 - University Not Found!' })
+    }
+  } catch (err) {
+    next(err)
+  }
+})
 
 // Create a middleware to handle 500 status errors.
 app.use((err, req, res, next) => {

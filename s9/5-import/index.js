@@ -435,6 +435,35 @@ application.delete('/universities/:universityId/courses/:courseId/enrollements/:
   }
 })
 
+
+application.post('/', async (request, response, next) => {
+  try {
+    const registry = {};
+    for (let u of request.body) {
+      const university = await University.create(u);
+      for (let s of u.students) {
+        const student = await Student.create(s);
+        registry[s.key] = student;
+        university.addStudent(student);
+      }
+      for (let c of u.courses) {
+        const course = await Course.create(c);
+        registry[c.key] = course;
+        university.addCourse(course);
+      }
+      for (let e of u.enrollements) {
+        registry[e.courseKey].addStudent(registry[e.studentKey]);
+        await registry[e.courseKey].save();
+      }
+      await university.save();
+    }
+    response.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+})
+
+
 // Create a middleware to handle 500 status errs.
 application.use((err, req, res, next) => {
   console.err(`[ERROR]: ${err}`)
