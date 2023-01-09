@@ -84,7 +84,7 @@ app.delete('/notes/:id', async (req, res) => {
 
 app.listen(8080, async () => {
   try {
-    await sequelize.sync({ alter: true })
+    await sequelize.sync({ force: true })
     console.warn('created tables')
     const sample = ['test1', 'test2', 'test3']
     sample.forEach(async (e) => {

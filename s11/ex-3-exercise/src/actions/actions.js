@@ -11,3 +11,14 @@ export function deleteNote (content) {
     payload: content
   }
 }
+
+
+export function saveNote (index, content) {
+  return {
+    type: 'SAVE_NOTE',
+    payload: {
+      index,
+      content
+    }
+  }
+}

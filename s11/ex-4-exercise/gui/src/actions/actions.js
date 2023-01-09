@@ -24,3 +24,21 @@ export function deleteNote (id) {
     }
   }
 }
+
+export function addNote (content) {
+  return {
+    type: 'ADD_NOTE',
+    payload: async () => {
+      await fetch(`${SERVER}/notes`, {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ content })
+      })
+      const response = await fetch(`${SERVER}/notes`)
+      const data = await response.json()
+      return data
+    }
+  }
+}

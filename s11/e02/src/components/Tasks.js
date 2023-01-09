@@ -14,6 +14,8 @@ const reducer = (state, action) => {
         count: state.count - 1,
         history: [...state.history, state.count - 1],
       };
+    case "reset":
+      return initialState
     default:
       throw Error();
   }
@@ -41,6 +43,13 @@ const Tasks = () => {
         }}
       >
         Decrement
+      </button>
+      <button
+        onClick={() => {
+          dispatch({ type: "reset" });
+        }}
+      >
+        Reset
       </button>
     </>
   );

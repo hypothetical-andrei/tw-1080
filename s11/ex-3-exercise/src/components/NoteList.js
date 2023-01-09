@@ -1,7 +1,7 @@
 import { shallowEqual, useSelector, useDispatch } from 'react-redux'
 import { useState } from 'react'
 
-import { addNote, deleteNote } from '../actions/actions'
+import { addNote, deleteNote, saveNote } from '../actions/actions'
 
 const noteListSelector = state => state.list.notes
 
@@ -19,7 +19,9 @@ const NoteList = (props) => {
           notes.map((e, i) => 
             <div key={i}>
               {e}
+              <input type='text' placeholder='note content' onChange={(evt) => setContent(evt.target.value)} />
               <input type='button' value='delete' onClick={() => dispatch(deleteNote(i))} />
+              <input type='button' value='save' onClick={() => dispatch(saveNote(i, content))} />
             </div>
           )
         }

@@ -8,6 +8,10 @@ export default function reducer (state = INITIAL_STATE, action) {
       return { ...state, notes: [...state.notes, action.payload] }
     case 'DELETE_NOTE':
       return { ...state, notes: [...state.notes.filter((e, i) => i !== action.payload)] }
+    case 'SAVE_NOTE':
+      const oldNotes = [...state.notes]
+      oldNotes[action.payload.index] = action.payload.content
+      return {...state, notes: oldNotes}
     default:
       return state
   }

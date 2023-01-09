@@ -12,6 +12,15 @@ const Home = () => {
       >
         Go to tasks
       </button>
+      <p>About</p>
+      <button
+        onClick={() => {
+          navigate("/about");
+        }}
+      >
+        Go to about
+      </button>
+
     </>
   );
 };
